@@ -21,6 +21,7 @@ public class EnemyController : MonoBehaviour
     public Transform firePoint;
     public float fireRate;
     public float fireCounter;
+    public float shootRange;
 
     // Start is called before the first frame update
     void Start()
@@ -43,16 +44,9 @@ public class EnemyController : MonoBehaviour
      
         theRb.velocity = moveDirection * moveSpeed;
        
-        if (moveDirection != Vector3.zero)
-        {
-             anim.SetBool("isMoving", true);
-        }
-        else
-        {
-            anim.SetBool("isMoving", false);
-        }
+       
 
-        if (shoudShoot)
+        if (shoudShoot && Vector3.Distance(transform.position,PlayerControler.instance.transform.position)<shootRange)
         {
             fireCounter -= Time.deltaTime;
             if(fireCounter <= 0)
@@ -61,6 +55,16 @@ public class EnemyController : MonoBehaviour
                 Instantiate(bullet, firePoint.position, firePoint.rotation);
                 fireCounter = 3;
             }
+        }
+       
+        
+        if (moveDirection != Vector3.zero)
+        {
+            anim.SetBool("isMoving", true);
+        }
+        else
+        {
+            anim.SetBool("isMoving", false);
         }
 
     }
