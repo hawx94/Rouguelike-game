@@ -15,6 +15,13 @@ public class EnemyController : MonoBehaviour
 
     public GameObject[] deathSplatters;
 
+    
+    public bool shoudShoot;
+    public GameObject bullet;
+    public Transform firePoint;
+    public float fireRate;
+    public float fireCounter;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +52,16 @@ public class EnemyController : MonoBehaviour
             anim.SetBool("isMoving", false);
         }
 
+        if (shoudShoot)
+        {
+            fireCounter -= Time.deltaTime;
+            if(fireCounter <= 0)
+            {
+                fireCounter = fireRate;
+                Instantiate(bullet, firePoint.position, firePoint.rotation);
+                fireCounter = 3;
+            }
+        }
 
     }
 
