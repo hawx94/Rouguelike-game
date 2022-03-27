@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
     public float rangeToChasePlayer;
     private Vector3 moveDirection;
 
-    public Animator anim;
+  //  public Animator anim;
 
     public int health = 150;
 
@@ -58,14 +58,14 @@ public class EnemyController : MonoBehaviour
         }
        
         
-        if (moveDirection != Vector3.zero)
+       /* if (moveDirection != Vector3.zero)
         {
             anim.SetBool("isMoving", true);
         }
         else
         {
             anim.SetBool("isMoving", false);
-        }
+        } */
 
     }
 

@@ -6,8 +6,8 @@ public class PlayerBullet : MonoBehaviour
 {
     public float speed = 7.5f;
     public Rigidbody2D theRb2d;
-    public GameObject impactEffct;
-    public GameObject impactEffct2;
+  //  public GameObject impactEffct;
+   // public GameObject impactEffct2;
     public int damageToGive = 50;
 
     
@@ -29,15 +29,15 @@ public class PlayerBullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag != "enemy") 
+        if (other.tag != "Enemy") 
         {
-            Instantiate(impactEffct, transform.position, transform.rotation); 
+           // Instantiate(impactEffct, transform.position, transform.rotation); 
         }
         Destroy(gameObject);
        if(other.tag == "Enemy") 
         {
             other.GetComponent<EnemyController>().DamageEnemy(damageToGive);
-            Instantiate(impactEffct2, transform.position, transform.rotation);
+           // Instantiate(impactEffct2, transform.position, transform.rotation);
         }
         
     }
