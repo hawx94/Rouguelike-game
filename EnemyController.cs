@@ -9,6 +9,8 @@ public class EnemyController : MonoBehaviour
     public float rangeToChasePlayer;
     private Vector3 moveDirection;
 
+    public SpriteRenderer theBody;  
+
   //  public Animator anim;
 
     public int health = 150;
@@ -32,55 +34,61 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, PlayerControler.instance.transform.position)< rangeToChasePlayer)// distancia para entrar na zona de perseguicao
+        if (theBody.isVisible && PlayerControler.instance.gameObject.activeInHierarchy)
         {
-            moveDirection = PlayerControler.instance.transform.position - transform.position;
-        }
-        else
-        {
-            moveDirection = Vector3.zero;
-        }
-        moveDirection.Normalize();
-     
-        theRb.velocity = moveDirection * moveSpeed;
-       
-       
-
-        if (shoudShoot && Vector3.Distance(transform.position,PlayerControler.instance.transform.position)<shootRange)
-        {
-            fireCounter -= Time.deltaTime;
-            if(fireCounter <= 0)
+            if (Vector3.Distance(transform.position, PlayerControler.instance.transform.position) < rangeToChasePlayer)// distancia para entrar na zona de perseguicao
             {
-                fireCounter = fireRate;
-                Instantiate(bullet, firePoint.position, firePoint.rotation);
-                fireCounter = 3;
+                moveDirection = PlayerControler.instance.transform.position - transform.position;
             }
+            else
+            {
+                moveDirection = Vector3.zero;
+            }
+            moveDirection.Normalize();
+
+            theRb.velocity = moveDirection * moveSpeed;
+
+
+
+            if (shoudShoot && Vector3.Distance(transform.position, PlayerControler.instance.transform.position) < shootRange)
+            {
+                fireCounter -= Time.deltaTime;
+                if (fireCounter <= 0)
+                {
+                    fireCounter = fireRate;
+                    Instantiate(bullet, firePoint.position, firePoint.rotation);
+                    fireCounter = 3;
+                }
+            }
+
         }
-       
-        
-       /* if (moveDirection != Vector3.zero)
+        else 
         {
-            anim.SetBool("isMoving", true);
+            theRb.velocity = Vector2.zero;        
         }
-        else
-        {
-            anim.SetBool("isMoving", false);
-        } */
+        /* if (moveDirection != Vector3.zero)
+         {
+             anim.SetBool("isMoving", true);
+         }
+         else
+         {
+             anim.SetBool("isMoving", false);
+         } */
 
     }
 
-    public void DamageEnemy(int damage)
-    {
-        health -= damage;
-        if (health <= 0)
+        public void DamageEnemy(int damage)
         {
-            Destroy(gameObject);
-            int selectedSplatter = Random.Range(0, deathSplatters.Length);
-            int rotation = Random.Range(0, 4);
-           Instantiate(deathSplatters[selectedSplatter], transform.position, Quaternion.Euler(0f,0f,rotation*90));
-        }
+            health -= damage;
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+                int selectedSplatter = Random.Range(0, deathSplatters.Length);
+                int rotation = Random.Range(0, 4);
+                Instantiate(deathSplatters[selectedSplatter], transform.position, Quaternion.Euler(0f, 0f, rotation * 90));
+            }
 
-    }
-   
-     
+        }
+    
+    
 }

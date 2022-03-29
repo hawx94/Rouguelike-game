@@ -18,6 +18,7 @@ public class PlayerControler : MonoBehaviour
     public Transform firePoint;
     public float timeBetweenShots;
     private float shotCounter;
+    public SpriteRenderer bodySr;
 
     private void Awake()
     {

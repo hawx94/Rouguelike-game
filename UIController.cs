@@ -11,7 +11,7 @@ public class UIController : MonoBehaviour
     {
         instance = this;
     }
-
+    public GameObject deathScreen;
     public Slider healthSlider;
     public Text healthText;
     // Start is called before the first frame update
