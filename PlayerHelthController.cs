@@ -58,4 +58,10 @@ public class PlayerHelthController : MonoBehaviour
     
         }
     }
+
+    public void MakeInvencible(float length)
+    {
+        invincCount = length;
+        PlayerControler.instance.bodySr.color = new Color(PlayerControler.instance.bodySr.color.r, PlayerControler.instance.bodySr.color.g, PlayerControler.instance.bodySr.color.b, 1f);
+    }
 }

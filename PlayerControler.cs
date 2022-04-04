@@ -19,6 +19,9 @@ public class PlayerControler : MonoBehaviour
     public float timeBetweenShots;
     private float shotCounter;
     public SpriteRenderer bodySr;
+    public float activeMoveSpeed;
+    public float dashSpeed = 8f, dashLength = 5f, dashCooldawn = 1f,dashInvencibility = 5f ;
+    private float dashCounter, dashCoolCounter;
 
     private void Awake()
     {
@@ -28,6 +31,7 @@ public class PlayerControler : MonoBehaviour
     void Start()
     {
         theCam = Camera.main;
+        activeMoveSpeed = moveSpeed;
     }
 
    
@@ -43,7 +47,7 @@ public class PlayerControler : MonoBehaviour
         moveInput.x = Input.GetAxisRaw("Horizontal");  
         moveInput.y = Input.GetAxisRaw("Vertical");
         //transform.position += new Vector3(moveInput.x * Time.deltaTime * moveSpeed , moveInput.y * Time.deltaTime * moveSpeed , 0f);
-        theRB.velocity = moveInput * moveSpeed;
+        theRB.velocity = moveInput * activeMoveSpeed;
 
         Vector3 mousePos = Input.mousePosition;
         Vector3 screenPoint = theCam.WorldToScreenPoint(transform.localPosition);
@@ -85,6 +89,36 @@ public class PlayerControler : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if(dashCoolCounter<= 0 && dashCounter <= 0)
+            {
+                activeMoveSpeed = dashSpeed;
+                dashCounter = dashLength;
+                anim.SetTrigger("dash");
+                anim.SetBool("finishDash", false);
+
+                PlayerHelthController.instance.MakeInvencible(dashInvencibility);
+
+            }
+            
+        }
+
+        if(dashCounter > 0)
+        {
+            dashCounter-= Time.deltaTime;
+            if(dashCounter <= 0)
+            {
+                activeMoveSpeed = moveSpeed;
+                dashCoolCounter = dashCooldawn;
+                anim.SetBool("finishDash", true);
+            }
+        }
+        
+        if(dashCoolCounter > 0)
+        {
+            dashCoolCounter-= Time.deltaTime;
+        }
 
             //Animação
         
